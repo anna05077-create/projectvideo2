@@ -1,0 +1,291 @@
+{
+ "ind_corr_annualized": {
+  "A1": -0.002,
+  "A2": -0.016,
+  "A3": 0.029,
+  "B1": -0.097,
+  "B2": -0.029,
+  "C1": 0.036,
+  "C2": -0.067,
+  "D1": 0.015,
+  "D2": 0.02,
+  "CLUSTER": 0.126,
+  "PERSTORE": -0.107,
+  "MOM": 0.003
+ },
+ "W0_annualized": {
+  "rho": -0.044,
+  "top20": -1.26,
+  "bot20": -0.3,
+  "p": 0.9287,
+  "n": 770
+ },
+ "V2_signals": {
+  "B1": "−",
+  "C2": "+",
+  "CLUSTER": "+",
+  "PERSTORE": "−"
+ },
+ "V2_train": {
+  "rho": 0.2,
+  "top20": 2.18,
+  "bot20": -4.84,
+  "p": 0.0,
+  "n": 782
+ },
+ "MOM_train": {
+  "rho": 0.003,
+  "top20": -2.03,
+  "bot20": -1.19,
+  "p": 0.5655,
+  "n": 770
+ },
+ "V2_holdout": {
+  "rho": 0.182,
+  "top20": -0.32,
+  "bot20": -7.73,
+  "p": 0.0,
+  "n": 774
+ },
+ "W0_holdout": {
+  "rho": -0.048,
+  "top20": -1.48,
+  "bot20": -0.3,
+  "p": 0.8962,
+  "n": 763
+ },
+ "mangwon": {
+  "V2": 55.7,
+  "V2_rank": 229,
+  "W0": 63.3,
+  "W0_rank": 37,
+  "n": 630,
+  "V2_rank_cluster10": 210,
+  "n_cluster10": 500
+ },
+ "V2_top10": [
+  {
+   "TRDAR_CD": 3111015,
+   "TRDAR_CD_NM": "석촌역 3번",
+   "SIGNGU_CD_NM": "송파구",
+   "V2": 87.7,
+   "W0_rank": 585,
+   "stores_b": 45.2,
+   "sales_b": 258732609.2
+  },
+  {
+   "TRDAR_CD": 3120195,
+   "TRDAR_CD_NM": "성수대교남단",
+   "SIGNGU_CD_NM": "강남구",
+   "V2": 86.2,
+   "W0_rank": 589,
+   "stores_b": 37.5,
+   "sales_b": 247819839.5
+  },
+  {
+   "TRDAR_CD": 3110438,
+   "TRDAR_CD_NM": "경춘선숲길 우측",
+   "SIGNGU_CD_NM": "노원구",
+   "V2": 83.1,
+   "W0_rank": 565,
+   "stores_b": 24.5,
+   "sales_b": 179141049.8
+  },
+  {
+   "TRDAR_CD": 3120128,
+   "TRDAR_CD_NM": "신도림역",
+   "SIGNGU_CD_NM": "구로구",
+   "V2": 83.0,
+   "W0_rank": 587,
+   "stores_b": 66.0,
+   "sales_b": 960334067.2
+  },
+  {
+   "TRDAR_CD": 3110049,
+   "TRDAR_CD_NM": "장충단 고개",
+   "SIGNGU_CD_NM": "중구",
+   "V2": 82.4,
+   "W0_rank": 523,
+   "stores_b": 15.2,
+   "sales_b": 113128765.5
+  },
+  {
+   "TRDAR_CD": 3111013,
+   "TRDAR_CD_NM": "송파나루역 1번(송리단길)",
+   "SIGNGU_CD_NM": "송파구",
+   "V2": 81.5,
+   "W0_rank": 506,
+   "stores_b": 99.2,
+   "sales_b": 1248652293.0
+  },
+  {
+   "TRDAR_CD": 3120233,
+   "TRDAR_CD_NM": "몽촌토성역",
+   "SIGNGU_CD_NM": "송파구",
+   "V2": 81.0,
+   "W0_rank": 139,
+   "stores_b": 27.2,
+   "sales_b": 395437681.5
+  },
+  {
+   "TRDAR_CD": 3110305,
+   "TRDAR_CD_NM": "보문역 5번",
+   "SIGNGU_CD_NM": "성북구",
+   "V2": 80.0,
+   "W0_rank": 397,
+   "stores_b": 17.5,
+   "sales_b": 78466753.5
+  },
+  {
+   "TRDAR_CD": 3110564,
+   "TRDAR_CD_NM": "홍대입구역 3번",
+   "SIGNGU_CD_NM": "마포구",
+   "V2": 79.8,
+   "W0_rank": 547,
+   "stores_b": 32.8,
+   "sales_b": 486394210.8
+  },
+  {
+   "TRDAR_CD": 3111060,
+   "TRDAR_CD_NM": "암사역 2번(서울강동초등학교)",
+   "SIGNGU_CD_NM": "강동구",
+   "V2": 79.4,
+   "W0_rank": 507,
+   "stores_b": 21.5,
+   "sales_b": 212801617.0
+  }
+ ],
+ "V2_top10_cluster": [
+  {
+   "TRDAR_CD": 3111015,
+   "TRDAR_CD_NM": "석촌역 3번",
+   "SIGNGU_CD_NM": "송파구",
+   "V2": 87.7,
+   "V2_rank": 1,
+   "stores_b": 45.2,
+   "sales_b": 258732609.2,
+   "per_store_b": 5717847.7
+  },
+  {
+   "TRDAR_CD": 3120195,
+   "TRDAR_CD_NM": "성수대교남단",
+   "SIGNGU_CD_NM": "강남구",
+   "V2": 86.2,
+   "V2_rank": 2,
+   "stores_b": 37.5,
+   "sales_b": 247819839.5,
+   "per_store_b": 6608529.1
+  },
+  {
+   "TRDAR_CD": 3110438,
+   "TRDAR_CD_NM": "경춘선숲길 우측",
+   "SIGNGU_CD_NM": "노원구",
+   "V2": 83.1,
+   "V2_rank": 3,
+   "stores_b": 24.5,
+   "sales_b": 179141049.8,
+   "per_store_b": 7311879.6
+  },
+  {
+   "TRDAR_CD": 3120128,
+   "TRDAR_CD_NM": "신도림역",
+   "SIGNGU_CD_NM": "구로구",
+   "V2": 83.0,
+   "V2_rank": 4,
+   "stores_b": 66.0,
+   "sales_b": 960334067.2,
+   "per_store_b": 14550516.2
+  },
+  {
+   "TRDAR_CD": 3110049,
+   "TRDAR_CD_NM": "장충단 고개",
+   "SIGNGU_CD_NM": "중구",
+   "V2": 82.4,
+   "V2_rank": 5,
+   "stores_b": 15.2,
+   "sales_b": 113128765.5,
+   "per_store_b": 7418279.7
+  },
+  {
+   "TRDAR_CD": 3111013,
+   "TRDAR_CD_NM": "송파나루역 1번(송리단길)",
+   "SIGNGU_CD_NM": "송파구",
+   "V2": 81.5,
+   "V2_rank": 6,
+   "stores_b": 99.2,
+   "sales_b": 1248652293.0,
+   "per_store_b": 12580879.5
+  },
+  {
+   "TRDAR_CD": 3120233,
+   "TRDAR_CD_NM": "몽촌토성역",
+   "SIGNGU_CD_NM": "송파구",
+   "V2": 81.0,
+   "V2_rank": 7,
+   "stores_b": 27.2,
+   "sales_b": 395437681.5,
+   "per_store_b": 14511474.6
+  },
+  {
+   "TRDAR_CD": 3110305,
+   "TRDAR_CD_NM": "보문역 5번",
+   "SIGNGU_CD_NM": "성북구",
+   "V2": 80.0,
+   "V2_rank": 8,
+   "stores_b": 17.5,
+   "sales_b": 78466753.5,
+   "per_store_b": 4483814.5
+  },
+  {
+   "TRDAR_CD": 3110564,
+   "TRDAR_CD_NM": "홍대입구역 3번",
+   "SIGNGU_CD_NM": "마포구",
+   "V2": 79.8,
+   "V2_rank": 9,
+   "stores_b": 32.8,
+   "sales_b": 486394210.8,
+   "per_store_b": 14851731.6
+  },
+  {
+   "TRDAR_CD": 3111060,
+   "TRDAR_CD_NM": "암사역 2번(서울강동초등학교)",
+   "SIGNGU_CD_NM": "강동구",
+   "V2": 79.4,
+   "V2_rank": 10,
+   "stores_b": 21.5,
+   "sales_b": 212801617.0,
+   "per_store_b": 9897749.6
+  }
+ ],
+ "E09": {
+  "n_dec": 106,
+  "n_inc": 498,
+  "dec_median": -0.46,
+  "inc_median": -1.27,
+  "p": 0.0718
+ },
+ "E05_size": {
+  "top20": -0.97,
+  "bot20": -6.53
+ },
+ "E19_seoul_bakery_to_coffee": 28.9,
+ "E19_mangwon_4q": 8.3,
+ "E19_이수역9번": 0.0,
+ "E19_한국SGI본부": 0.0,
+ "E16_mangwon": [
+  0.1,
+  5.3,
+  19.9,
+  27.1,
+  40.2,
+  7.5
+ ],
+ "E16_seoul": [
+  0.6,
+  15.3,
+  34.0,
+  24.3,
+  21.5,
+  4.3
+ ]
+}

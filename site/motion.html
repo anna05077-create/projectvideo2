@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>망원역 출점 영상</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--cream:#fbf5ec;--esp:#2b1d16;--amber:#e8a33d;--terra:#c8553d;--night:#141b33;--sky:#f6d7a7;--mute:#8a7a6d;--line:#e6d9c6}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;overflow:hidden;font-family:'Noto Sans KR',system-ui,sans-serif;word-break:keep-all}
+#stage{position:relative;width:100%;height:100%;background:var(--cream);color:var(--esp);transition:background 1.2s,color 1.2s;overflow:hidden}
+#stage.dark{background:var(--night);color:#f5ecdf}
+.scene{position:absolute;inset:0;padding:5% 7% 16%;display:flex;align-items:center;gap:4%;opacity:0;pointer-events:none;transition:opacity .5s}
+.scene.on{opacity:1}
+.col{flex:1;min-width:0}
+.eyebrow{font-size:clamp(9px,1.4vw,14px);letter-spacing:.18em;font-weight:700;color:var(--terra);margin-bottom:1.4vh}
+.dark .eyebrow{color:var(--amber)}
+.h{font-size:clamp(18px,4vw,52px);font-weight:900;line-height:1.15;letter-spacing:-.02em}
+.s{font-size:clamp(11px,1.8vw,22px);font-weight:700;line-height:1.4;margin-top:1.4vh}
+.amb{color:var(--amber)}.ter{color:var(--terra)}.mute{color:var(--mute)}
+.pop{opacity:0;transform:translateY(16px) scale(.92);transition:all .55s cubic-bezier(.3,1.5,.5,1)}
+.on .pop{opacity:1;transform:none}
+.d1{transition-delay:.2s}.d2{transition-delay:.5s}.d3{transition-delay:.8s}.d4{transition-delay:1.1s}.d5{transition-delay:1.4s}.d6{transition-delay:1.7s}
+.flap{display:inline-flex;gap:.18em}
+.flap span{display:inline-block;background:var(--esp);color:var(--cream);padding:.06em .14em;border-radius:.12em;min-width:.9em;text-align:center}
+.chips{display:flex;gap:1.6vw;margin-top:3vh}
+.chip{flex:1;background:#fff;border:1px solid var(--line);border-radius:16px;padding:1.6vh 1.2vw;display:flex;gap:.8vw;align-items:center;color:var(--esp)}
+.chip svg{width:clamp(22px,3.4vw,44px);height:auto;flex:none}
+.chip b{display:block;font-size:clamp(14px,2.8vw,36px);font-weight:900;font-variant-numeric:tabular-nums;line-height:1.05}
+.chip small{font-size:clamp(8px,1.1vw,13px);color:var(--mute)}
+.map{width:100%;height:auto}
+.dot{transition:opacity .6s}
+.pin{transform:translateY(-40px) scale(0);transition:transform .7s cubic-bezier(.3,1.6,.5,1)}
+.pin.drop{transform:none}
+.ripple{transform-box:fill-box;transform-origin:center;animation:rip 1.8s infinite}
+@keyframes rip{0%{opacity:.7;transform:scale(.3)}100%{opacity:0;transform:scale(1.8)}}
+.bars{display:flex;gap:1.6vw;align-items:flex-end;height:44vh}
+.bc{flex:1;display:flex;flex-direction:column;align-items:center;gap:.8vh;height:100%;justify-content:flex-end}
+.bp{display:flex;gap:.4vw;align-items:flex-end;height:78%;width:100%;justify-content:center}
+.bp i{width:40%;border-radius:8px 8px 3px 3px;height:0;transition:height 1s cubic-bezier(.2,.8,.2,1)}
+.bp i.m{background:var(--amber)}.bp i.s{background:rgba(255,255,255,.22)}
+.bc.peak .bp i.m{background:var(--terra);box-shadow:0 0 24px rgba(232,163,61,.7)}
+.bc b{font-size:clamp(10px,1.7vw,21px);font-variant-numeric:tabular-nums}
+.bc small{font-size:clamp(8px,1.2vw,14px);opacity:.75}
+.bc svg{width:clamp(14px,2.2vw,28px)}
+.duo{display:flex;gap:5vw;justify-content:center;align-items:flex-end}
+.fig{text-align:center}
+.fig svg{width:clamp(80px,15vw,200px);height:auto}
+.fig b{display:block;font-size:clamp(22px,5vw,64px);font-weight:900;font-variant-numeric:tabular-nums;line-height:1}
+.fig small{font-size:clamp(9px,1.3vw,15px);color:var(--mute)}
+.fillr{transition:all 1.6s cubic-bezier(.2,.8,.2,1)}
+.flow{position:relative;display:flex;justify-content:space-between;align-items:center;width:100%;margin-top:5vh}
+.flow svg.track{position:absolute;left:0;top:50%;width:100%;height:10px;transform:translateY(-50%);overflow:visible}
+.nd{position:relative;z-index:1;width:17%;background:#fff;border:2px solid var(--line);border-radius:18px;padding:1.6vh .6vw;text-align:center;opacity:0;transform:scale(.7);transition:all .5s cubic-bezier(.3,1.5,.5,1)}
+.nd.show{opacity:1;transform:none;border-color:var(--amber)}
+.nd svg{width:clamp(22px,3.6vw,46px);height:auto}
+.nd b{display:block;font-size:clamp(10px,1.6vw,19px);margin-top:.6vh}
+.nd small{font-size:clamp(8px,1.15vw,13px);color:var(--mute)}
+.mover{position:absolute;top:50%;left:3%;width:clamp(10px,1.4vw,18px);height:clamp(10px,1.4vw,18px);border-radius:50%;background:var(--terra);transform:translate(-50%,-50%);z-index:2;box-shadow:0 0 0 6px rgba(200,85,61,.2)}
+.cta{display:inline-flex;align-items:center;gap:.6em;margin-top:3vh;background:var(--terra);color:#fff;font-weight:900;padding:1.4vh 2.2vw;border-radius:999px;font-size:clamp(12px,2vw,24px)}
+canvas#fx{position:absolute;inset:0;pointer-events:none;z-index:3}
+#cap{position:absolute;left:5%;right:5%;bottom:11%;text-align:center;font-size:clamp(11px,1.8vw,22px);font-weight:700;line-height:1.5}
+#cap .w{opacity:.4;transition:opacity .12s}
+#cap .w.said{opacity:1}
+#cap .w.now{background:var(--amber);color:var(--esp);border-radius:4px;padding:0 .15em;opacity:1}
+#ctl{position:absolute;left:0;right:0;bottom:0;z-index:8;display:flex;align-items:center;gap:12px;padding:10px 16px;background:linear-gradient(transparent,rgba(43,29,22,.55));color:#fff;opacity:.15;transition:opacity .3s}
+#stage:hover #ctl,#ctl:focus-within,#stage.paused #ctl{opacity:1}
+#ctl button{background:none;border:0;color:#fff;cursor:pointer;width:32px;height:32px;display:flex;align-items:center;justify-content:center;padding:0}
+#ctl button svg{width:22px;height:22px}
+#seek{flex:1;-webkit-appearance:none;appearance:none;height:6px;border-radius:3px;background:linear-gradient(90deg,var(--terra) var(--p,0%),rgba(255,255,255,.35) var(--p,0%));cursor:pointer}
+#seek::-webkit-slider-thumb{-webkit-appearance:none;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 0 0 3px var(--terra)}
+#seek::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:#fff;border:3px solid var(--terra)}
+#tm{font-size:13px;font-variant-numeric:tabular-nums;min-width:86px;text-align:right}
+.chap{position:absolute;bottom:34px;left:16px;right:16px;height:0;pointer-events:none}
+#play{position:absolute;inset:0;z-index:9;border:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2vh;background:radial-gradient(circle at 50% 45%,#fff8ee,#f1e2cb);font:inherit;color:var(--esp);width:100%}
+#play .btn{width:clamp(56px,9vw,110px);height:clamp(56px,9vw,110px);border-radius:50%;background:var(--terra);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 30px rgba(200,85,61,.35)}
+#play .btn:after{content:"";border-left:clamp(16px,2.6vw,32px) solid #fff;border-top:clamp(10px,1.6vw,20px) solid transparent;border-bottom:clamp(10px,1.6vw,20px) solid transparent;margin-left:.5vw}
+#play .t{font-size:clamp(14px,2.6vw,32px);font-weight:900}
+#play small{color:var(--mute);font-size:clamp(10px,1.4vw,16px)}
+#play.hide{display:none}
+</style>
+</head>
+<body>
+<div id="stage">
+<canvas id="fx"></canvas>
+
+<section class="scene" data-s="0">
+  <div class="col">
+    <div class="eyebrow pop">ANSWER FIRST · 신규 출점 제안</div>
+    <div class="h"><span class="flap" id="flap"></span><br><span class="pop d3" style="display:inline-block">에 <span class="ter">베이커리 라운지</span>를</span></div>
+    <div class="chips">
+      <div class="chip pop d4"><svg viewBox="0 0 48 48" fill="none" stroke="#c8553d" stroke-width="3" stroke-linecap="round"><path d="M8 38V20M18 38V12M28 38V24M38 38V8"/><path d="M4 42h40"/></svg><div><b data-count="2726" data-fmt="만">0</b><small>월 영업이익(원)</small></div></div>
+      <div class="chip pop d5"><svg viewBox="0 0 48 48" fill="none" stroke="#e8a33d" stroke-width="3" stroke-linecap="round"><circle cx="24" cy="24" r="17"/><path d="M24 13v11l7 5"/></svg><div><b data-count="12.9" data-dec="1" data-fmt="개월">0</b><small>투자 4.5억 회수</small></div></div>
+      <div class="chip pop d6"><svg viewBox="0 0 48 48" fill="none" stroke="#2b1d16" stroke-width="3" stroke-linecap="round"><path d="M24 6l15 6v11c0 9-6 16-15 19C15 39 9 32 9 23V12z"/><path d="M17 24l5 5 9-10"/></svg><div><b>−20%</b><small>객수여도 흑자</small></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="scene" data-s="1">
+  <div class="col" style="flex:.9">
+    <div class="eyebrow pop">01 · 서울시 상권분석서비스 · 백테스트</div>
+    <div class="h pop d1" style="font-size:clamp(16px,3.2vw,42px)"><span id="cnt">1,650</span>개 상권 →<br><span class="ter">카페 집적지</span>가 답</div>
+    <div class="s pop d2"><span class="mute">뜨는 상권 따라가기</span> ρ 0.003 ✕<br><span class="amb">이미 카페가 모인 곳</span> ρ +0.13 ✓</div>
+  </div>
+  <div class="col"><svg class="map" viewBox="0 0 500 360">
+    <path d="M40 190c10-60 60-110 130-125 50-11 80 5 120-8 50-16 110 6 150 50 30 33 25 85-5 120-30 35-90 50-150 52-60 2-90 18-140 5C80 271 33 240 40 190z" fill="#f3e6d2" stroke="#e0ccb0" stroke-width="2"/>
+    <path d="M30 215c60-20 120 10 190-8s130-30 250-5" fill="none" stroke="#9cc3d5" stroke-width="10" stroke-linecap="round" opacity=".8"/>
+    <text x="400" y="222" font-size="12" fill="#6f9fb5">한강</text>
+    <g id="dots"></g>
+    <g transform="translate(150,190)"><circle class="ripple" r="22" fill="none" stroke="#c8553d" stroke-width="3"/><g class="pin" id="pin"><path d="M0 0c-14-16-20-26-20-36a20 20 0 0 1 40 0c0 10-6 20-20 36z" fill="#c8553d"/><circle cy="-36" r="7" fill="#fff"/></g><text x="24" y="-30" font-size="18" font-weight="900" fill="#2b1d16" id="pinT" opacity="0">망원역 1번</text></g>
+  </svg></div>
+</section>
+
+<section class="scene" data-s="2">
+  <div class="col" style="flex:.75">
+    <div class="eyebrow pop">02 · 망원역 1번 · 시간대별 매출</div>
+    <div class="h pop d1" style="font-size:clamp(16px,3.4vw,44px)">매출의 <span class="amb">40%</span>가<br>저녁 5~9시</div>
+    <div class="s pop d2" style="opacity:.85">서울 평균의 2배<br><span class="amb">유동인구 +17.6%</span> · 경쟁 점포 <span class="amb">−17.5%</span></div>
+  </div>
+  <div class="col"><div class="bars" id="bars"></div><div style="font-size:clamp(8px,1.2vw,14px);opacity:.7;margin-top:1vh">■ 망원역 1번 &nbsp; □ 서울 전체 (커피·제과, 최근 4분기, %)</div></div>
+</section>
+
+<section class="scene" data-s="3">
+  <div class="col" style="flex:.8">
+    <div class="eyebrow pop">03 · 예상 못 한 공백</div>
+    <div class="h pop d1" style="font-size:clamp(16px,3.4vw,44px)">커피는 넘치고,<br><span class="ter">빵은 비어 있다</span></div>
+    <div class="s pop d2">2030 매출 70% · 객단가 서울의 1.8배</div>
+  </div>
+  <div class="col"><div class="duo">
+    <div class="fig pop d2"><svg viewBox="0 0 120 130"><defs><clipPath id="cc"><path d="M20 40h70l-8 70a10 10 0 0 1-10 9H38a10 10 0 0 1-10-9z"/></clipPath></defs><rect x="0" y="40" width="120" height="90" fill="#efe2cf" clip-path="url(#cc)"/><rect class="fillr" id="cupF" x="0" y="130" width="120" height="0" fill="#6b3f2a" clip-path="url(#cc)"/><path d="M20 40h70l-8 70a10 10 0 0 1-10 9H38a10 10 0 0 1-10-9z" fill="none" stroke="#2b1d16" stroke-width="4"/><path d="M90 55h8a12 12 0 0 1 0 24h-11" fill="none" stroke="#2b1d16" stroke-width="4"/><path d="M45 28c-4-6 4-10 0-17M62 28c-4-6 4-10 0-17" stroke="#8a7a6d" stroke-width="3" fill="none" stroke-linecap="round"/></svg><b>100</b><small>커피 매출</small></div>
+    <div class="fig pop d3"><svg viewBox="0 0 140 110"><defs><clipPath id="cr"><path d="M10 80c0-30 25-55 60-55s60 25 60 55c-8 10-25 14-60 14S18 90 10 80z"/></clipPath></defs><rect x="0" y="0" width="140" height="110" fill="#f3e6d2" clip-path="url(#cr)"/><rect class="fillr" id="crS" x="0" y="94" width="140" height="0" fill="#b89a72" clip-path="url(#cr)"/><rect class="fillr" id="crF" x="0" y="94" width="140" height="0" fill="#e8a33d" clip-path="url(#cr)"/><path d="M10 80c0-30 25-55 60-55s60 25 60 55c-8 10-25 14-60 14S18 90 10 80z" fill="none" stroke="#2b1d16" stroke-width="4"/><path d="M40 40l8 45M70 27v65M100 40l-8 45" stroke="#2b1d16" stroke-width="3" fill="none"/></svg><b class="ter" data-count="8.3" data-dec="1">0</b><small>제과 매출 (연갈색 = 서울 28.9)</small></div>
+  </div></div>
+</section>
+
+<section class="scene" data-s="4" style="flex-direction:column;align-items:stretch;justify-content:center">
+  <div class="eyebrow pop">04 · 해 질 녘부터 붐비는 베이커리 라운지</div>
+  <div class="flow">
+    <svg class="track"><line x1="3%" y1="5" x2="97%" y2="5" stroke="#e0ccb0" stroke-width="4" stroke-dasharray="8 8"/></svg>
+    <div class="mover" id="mover"></div>
+    <div class="nd"><svg viewBox="0 0 48 48" fill="none" stroke="#c8553d" stroke-width="3" stroke-linecap="round"><circle cx="24" cy="16" r="8"/><path d="M8 42c2-10 9-15 16-15s14 5 16 15"/></svg><b>타깃</b><small>2030 · 저녁·주말</small></div>
+    <div class="nd"><svg viewBox="0 0 48 48" fill="none" stroke="#c8553d" stroke-width="3" stroke-linecap="round"><path d="M6 22l18-14 18 14v20H6z"/><path d="M18 42V30h12v12"/></svg><b>공간</b><small>30평 36석 · 오픈키친</small></div>
+    <div class="nd"><svg viewBox="0 0 48 48" fill="none" stroke="#c8553d" stroke-width="3" stroke-linecap="round"><path d="M6 32c0-12 8-20 18-20s18 8 18 20c-3 3-9 5-18 5S9 35 6 32z"/><path d="M16 18l3 16M32 18l-3 16"/></svg><b>메뉴</b><small>빵 50% · 저녁 코스</small></div>
+    <div class="nd"><svg viewBox="0 0 48 48" fill="none" stroke="#c8553d" stroke-width="3" stroke-linecap="round"><path d="M34 30A14 14 0 1 1 22 10a11 11 0 0 0 12 20z"/></svg><b>운영</b><small>11:00~22:00</small></div>
+    <div class="nd"><svg viewBox="0 0 48 48" fill="none" stroke="#c8553d" stroke-width="3" stroke-linecap="round"><path d="M6 38l10-12 8 6 14-18"/><path d="M30 14h8v8"/></svg><b>손익</b><small>월 매출 1.34억</small></div>
+  </div>
+</section>
+
+<section class="scene" data-s="5" style="justify-content:center;text-align:center;flex-direction:column">
+  <div class="eyebrow pop">제안</div>
+  <div class="h pop d1">망원역 1번,<br><span class="ter">베이커리 라운지</span></div>
+  <div class="chips" style="width:62%;margin-left:auto;margin-right:auto">
+    <div class="chip pop d2"><svg viewBox="0 0 48 48" fill="none" stroke="#2b1d16" stroke-width="3" stroke-linecap="round"><path d="M24 6l15 6v11c0 9-6 16-15 19C15 39 9 32 9 23V12z"/></svg><div style="text-align:left"><b data-count="1151" data-fmt="만">0</b><small>객수 −20%에도 월 영업이익</small></div></div>
+    <div class="chip pop d3"><svg viewBox="0 0 48 48" fill="none" stroke="#2b1d16" stroke-width="3" stroke-linecap="round"><rect x="8" y="10" width="32" height="30" rx="4"/><path d="M8 18h32M16 6v8M32 6v8"/></svg><div style="text-align:left"><b>6개월</b><small>실적으로 2호점 판단</small></div></div>
+  </div>
+  <div class="pop d4"><span class="cta">✓ 출점 승인 요청</span></div>
+</section>
+
+<div id="cap"></div>
+<div id="ctl"><button id="pp" aria-label="재생/일시정지"><svg viewBox="0 0 24 24" fill="#fff" id="ppi"><path d="M7 5l12 7-12 7z"/></svg></button><input id="seek" type="range" min="0" max="84" step="0.1" value="0" aria-label="재생 위치"><span id="tm">0:00 / 1:24</span><button id="fs" aria-label="전체 화면"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button></div>
+<button id="play" aria-label="영상 재생"><span class="btn"></span><span class="t">망원역 1번 출점 제안</span><small>1분 24초 · 클릭하면 내레이션과 함께 재생</small></button>
+</div>
+<audio id="au" src="narration.m4a" preload="auto"></audio>
+<script>
+const SEG=[16.32,16.23,14.66,16.16,8.92,11.49];
+const TXT=["결론부터 말씀드립니다. 마포구 망원역 1번 상권에, 저녁에 붐비는 베이커리 라운지를 여십시오. 기본 시나리오 월 영업이익 약 2,700만 원, 투자금 4억 5천만 원은 약 13개월에 회수합니다.",
+"서울시 상권분석서비스로 630개 상권을 점수화하고, 과거 데이터로 미래를 맞혀 봤습니다. 최근에 뜬 상권을 따라가는 전략은 맞히지 못했습니다. 유효한 신호는 카페가 이미 모인 집적지였습니다.",
+"망원역 1번은 유동인구가 17% 늘었는데 경쟁 점포는 17% 줄었습니다. 그리고 매출의 40%가 저녁 5시부터 9시에 나옵니다. 서울 평균의 두 배입니다.",
+"20~30대가 매출의 70%, 객단가는 서울의 1.8배입니다. 그런데 베이커리 매출은 커피의 8%로, 서울 평균 29%에 한참 못 미칩니다. 베이커리가 비어 있습니다.",
+"그래서 베이커리 오픈키친을 입구에 두고, 오전 11시부터 밤 10시까지, 저녁 디저트 코스로 승부합니다.",
+"객수가 20% 줄어도 흑자입니다. 첫 6개월 실적으로 2호점을 판단하십시오. 망원역 1번, 베이커리 라운지를 제안드립니다."];
+const START=[];let acc=0;SEG.forEach(d=>{START.push(acc);acc+=d});const TOTAL=acc;
+const $=s=>document.querySelector(s),stage=$('#stage'),au=$('#au'),scenes=[...document.querySelectorAll('.scene')],cap=$('#cap'),seek=$('#seek'),tm=$('#tm');
+const timers=[];const later=(f,ms)=>timers.push(setTimeout(f,ms));
+let seed=7;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
+const dots=$('#dots');const D=[];
+while(D.length<165){const x=60+rnd()*400,y=70+rnd()*230;const dx=(x-250)/215,dy=(y-185)/120;if(dx*dx+dy*dy<1)D.push([x,y,rnd()])}
+D.forEach(([x,y,r])=>dots.insertAdjacentHTML('beforeend',`<circle class="dot" cx="${x.toFixed(0)}" cy="${y.toFixed(0)}" r="4" fill="#c9b79c" data-k="${r.toFixed(3)}"/>`));
+const FL="망원역 1번";const flap=$('#flap');[...FL].forEach(c=>flap.insertAdjacentHTML('beforeend',`<span data-c="${c}">${c===' '?'&nbsp;':c}</span>`));
+function runFlap(){const G="가나다라마바사아자차카타파하1234";[...flap.children].forEach((s,i)=>{if(s.dataset.c===' ')return;let n=0;const iv=setInterval(()=>{s.textContent=G[Math.floor(Math.random()*G.length)];if(++n>8+i*3){clearInterval(iv);s.textContent=s.dataset.c}},55);timers.push(iv)})}
+const TZ=[["06~11",5.3,15.3,"sun"],["11~14",19.9,34.0,"sun"],["14~17",27.1,24.3,"sun"],["17~21",40.2,21.5,"moon"],["21~24",7.5,4.3,"moon"]];
+const ICON={sun:'<svg viewBox="0 0 24 24" fill="none" stroke="#e8a33d" stroke-width="2.2"><circle cx="12" cy="12" r="5"/><path d="M12 1v3M12 20v3M1 12h3M20 12h3M4 4l2 2M18 18l2 2M4 20l2-2M18 6l2-2"/></svg>',moon:'<svg viewBox="0 0 24 24" fill="#f6d7a7"><path d="M17 15A8 8 0 1 1 9 4a6.5 6.5 0 0 0 8 11z"/></svg>'};
+TZ.forEach(([l,m,s,ic],i)=>$('#bars').insertAdjacentHTML('beforeend',`<div class="bc ${i==3?'peak':''}"><b>${m}</b><div class="bp"><i class="m" data-h="${m*2.1}"></i><i class="s" data-h="${s*2.1}"></i></div>${ICON[ic]}<small>${l}시</small></div>`));
+function count(el){const t=+el.dataset.count,d=+(el.dataset.dec||0),f=el.dataset.fmt||'';const t0=performance.now();(function st(n){const p=Math.min(1,(n-t0)/1300),e=1-Math.pow(1-p,3);el.textContent=(t*e).toLocaleString('ko-KR',{minimumFractionDigits:d,maximumFractionDigits:d})+f;if(p<1)requestAnimationFrame(st)})(t0)}
+const cv=$('#fx'),cx=cv.getContext('2d');let parts=[];
+function burst(){const r=stage.getBoundingClientRect();cv.width=r.width;cv.height=r.height;parts=Array.from({length:90},()=>({x:r.width/2,y:r.height*.45,vx:(Math.random()-.5)*12,vy:-Math.random()*11-3,c:['#c8553d','#e8a33d','#2b1d16','#f6d7a7'][Math.floor(Math.random()*4)],s:4+Math.random()*6,l:0}));(function f(){cx.clearRect(0,0,cv.width,cv.height);parts.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.35;p.l++;cx.fillStyle=p.c;cx.fillRect(p.x,p.y,p.s,p.s*.6)});parts=parts.filter(p=>p.l<120);if(parts.length)requestAnimationFrame(f)})()}
+function setRect(r,h,base){r.setAttribute('y',base-h);r.setAttribute('height',h)}
+let cur=-1;
+function enter(i){timers.splice(0).forEach(t=>{clearTimeout(t);clearInterval(t)});
+  scenes.forEach((s,k)=>s.classList.toggle('on',k===i));stage.classList.toggle('dark',i===2);
+  const sc=scenes[i];sc.querySelectorAll('[data-count]').forEach(count);
+  cap.innerHTML=TXT[i].split(' ').map(w=>`<span class="w">${w}</span>`).join(' ');
+  if(i===0)runFlap();
+  if(i===1){const ds=[...dots.children],cnt=$('#cnt'),pin=$('#pin');pin.classList.remove('drop');$('#pinT').setAttribute('opacity',0);ds.forEach(d=>{d.style.opacity=1;d.setAttribute('fill','#c9b79c');d.setAttribute('r',4)});cnt.textContent='1,650';
+    later(()=>{cnt.textContent='630';ds.forEach(d=>{if(+d.dataset.k<.62)d.style.opacity=.12})},3500);
+    later(()=>{cnt.textContent='5';ds.forEach(d=>{const k=+d.dataset.k;if(k>=.62&&k<.95)d.style.opacity=.12;if(k>=.95){d.setAttribute('fill','#e8a33d');d.setAttribute('r',7)}})},8500);
+    later(()=>{pin.classList.add('drop');$('#pinT').setAttribute('opacity',1)},11500)}
+  if(i===2){sc.querySelectorAll('.bp i').forEach(x=>x.style.height=0);[...sc.querySelectorAll('.bc')].forEach((c,k)=>later(()=>c.querySelectorAll('i').forEach(x=>x.style.height=x.dataset.h+'%'),500+k*500))}
+  if(i===3){const cup=$('#cupF'),cr=$('#crF'),cs=$('#crS');setRect(cup,0,130);setRect(cr,0,94);setRect(cs,0,94);later(()=>setRect(cup,90,130),700);later(()=>setRect(cs,Math.round(69*.289),94),1500);later(()=>setRect(cr,Math.round(69*.083)+2,94),2200)}
+  if(i===4){const n=[...sc.querySelectorAll('.nd')],mv=$('#mover');n.forEach(x=>x.classList.remove('show'));mv.style.transition='none';mv.style.left='3%';
+    n.forEach((x,k)=>later(()=>{x.classList.add('show');mv.style.transition='left 1.2s ease-in-out';mv.style.left=(8.5+k*20.75)+'%'},300+k*1500))}
+  if(i===5)later(burst,1400);
+}
+function tick(){const t=au.currentTime;let i=START.findIndex((s,k)=>t>=s&&t<s+SEG[k]);if(i<0)i=SEG.length-1;
+  if(i!==cur){cur=i;enter(i)}
+  const p=(t-START[i])/(SEG[i]-.5),ws=cap.querySelectorAll('.w'),k=Math.floor(Math.max(0,Math.min(.999,p))*ws.length);
+  ws.forEach((w,j)=>{w.classList.toggle('said',j<k);w.classList.toggle('now',j===k)});
+  if(!seeking){seek.value=t;}seek.style.setProperty('--p',(t/TOTAL*100)+'%');tm.textContent=fmt(t)+' / '+fmt(TOTAL);if(!au.paused)requestAnimationFrame(tick)}
+const fmt=x=>Math.floor(x/60)+':'+String(Math.floor(x%60)).padStart(2,'0');let seeking=false;
+const play=$('#play');
+const PLAY='<path d="M7 5l12 7-12 7z"/>',PAUSE='<path d="M7 5h4v14H7zM13 5h4v14h-4z"/>';
+function go(){play.classList.add('hide');au.play();stage.classList.remove('paused');$('#ppi').innerHTML=PAUSE;requestAnimationFrame(tick)}
+function stop(){au.pause();stage.classList.add('paused');$('#ppi').innerHTML=PLAY}
+seek.max=TOTAL.toFixed(1);
+play.onclick=()=>{au.currentTime=0;cur=-1;go()};
+au.onended=()=>{stop();play.classList.remove('hide');play.querySelector('.t').textContent='다시 보기'};
+$('#pp').onclick=e=>{e.stopPropagation();au.paused?go():stop()};
+seek.addEventListener('input',()=>{seeking=true;au.currentTime=+seek.value;cur=-1;play.classList.add('hide');tick()});
+seek.addEventListener('change',()=>{seeking=false;au.currentTime=+seek.value;cur=-1;tick()});
+$('#fs').onclick=e=>{e.stopPropagation();document.fullscreenElement?document.exitFullscreen():stage.requestFullscreen&&stage.requestFullscreen()};
+$('#ctl').addEventListener('click',e=>e.stopPropagation());
+stage.addEventListener('click',e=>{if(play.contains(e.target))return;au.paused?go():stop()});
+document.addEventListener('keydown',e=>{if(e.code==='Space'){e.preventDefault();au.paused?go():stop()}if(e.code==='ArrowRight'){au.currentTime=Math.min(TOTAL,au.currentTime+5);cur=-1;tick()}if(e.code==='ArrowLeft'){au.currentTime=Math.max(0,au.currentTime-5);cur=-1;tick()}});
+const pv=new URLSearchParams(location.search).get('scene');
+if(pv!==null){play.classList.add('hide');enter(+pv)}
+</script>
+</body>
+</html>
